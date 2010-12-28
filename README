@@ -1,0 +1,27 @@
+hfget lets you download from hofile.com using wget
+Premium account required
+
+You can download single links:
+hfget.py -u username -p password http://hotfile.com/filename...
+
+or serveral links at once stored in a txt file:
+hfget.py -u username -p password -l linkfile
+
+simply put one link per line
+
+You can also scrape hotfile links from a website
+hfget.py -u username -p password -p http://website.com/with/hotfile/links.html
+
+If you just want to check if the files are still online use the -c option
+
+It's also possible to create a conf file so you don't have to type in your login information every time you want to download something
+
+Create the file .hfget.conf in your home directory
+
+Insert:
+[Account]
+username = yourusername
+password = yourpassword
+download_dir = thedefaultdownloaddirectory 	# if you omit that line, the default download directory is "."
+
+
