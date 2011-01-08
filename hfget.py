@@ -84,6 +84,7 @@ if '-h' in args or len(args) == 1:
   print '\t-c only check if file is online, do not download it'
   print '\t-l linklist'
   print '\t-p parse url for hotfile links'
+  print '\t-s kbit/s limit download speed'
   exit()
 
 #check if username and password are given as command line options
@@ -121,7 +122,10 @@ if '-l' in args:
    exit('missing argument for -l')
  else:
    linkfile = args[args.index('-l') + 1]
-   
+
+if '-s' in args:
+ speed_cap = args[args.index('-s') + 1]
+
 if linkfile.strip() != '':
   input = open(linkfile, 'r')
   for line in input:
@@ -151,9 +155,8 @@ else:
       filename = filename_explode[len(filename_explode) - 1]
       if filename.endswith('.html'):
         filename = filename[0:len(filename) - 5]
-      print 'wget -c -O ' + download_dir + '/' + filename + ' ' + link
-      os.system('wget -c -O ' + download_dir + '/' + filename + ' ' + dlink)
-  
-  
-
-
+      print 'wget -c -O ' + download_dir + '/' + filename + ' ' + dlink
+      try:
+      	os.system('wget -c --limit-rate=' + speed_cap + ' -O ' + download_dir + '/' + filename + ' ' + '"' + dlink + '"')
+      except NameError:
+      	os.system('wget -c -O "' + download_dir + '/' + filename + '" ' + '"' + dlink + '"')
